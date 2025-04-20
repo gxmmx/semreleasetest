@@ -2,37 +2,33 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Node (just for semantic-release)
-        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          fetch-depth: 0
 
-      - name: Install semantic-release
-        run: |
-          npm install -g semantic-release \
-            @semantic-release/changelog \
-            @semantic-release/git \
-            @semantic-release/github
+      - name: 📝 Get Next Version
+        id: version
+        uses: ./.github/actions/get-next-version
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run semantic-release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: semantic-release
+      - name: 🛠️ Build Script with version
+        uses: ./.github/actions/build-script
+        with:
+          version: ${{ steps.version.outputs.new_release_version }}
+
+      - name: 🚀 Publish Release
+        uses: ./.github/actions/release
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
