@@ -24,7 +24,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🛠️ Build Script with version
-        uses: ./.github/actions/build-script
+        uses: ./.github/actions/test-build
         with:
           version: ${{ steps.version.outputs.new_release_version }}
 
