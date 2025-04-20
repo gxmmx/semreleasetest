@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "my newnew script has been built for version $1"
+echo "my newndew script has been built for version $1"
