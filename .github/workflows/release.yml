@@ -26,7 +26,7 @@ jobs:
       - name: 🛠️ Build Script with version
         uses: ./.github/actions/test-build
         with:
-          version: ${{ steps.version.outputs.new_release_version }}
+          version_to_build: ${{ steps.version.outputs.new_release_version }}
 
       - name: 🚀 Publish Release
         uses: ./.github/actions/release
