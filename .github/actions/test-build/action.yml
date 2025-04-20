@@ -1,0 +1,17 @@
+name: "🏗️ Build Script"
+description: "Runs the script at src/script.sh and prints the output"
+
+inputs:
+  version_to_build:
+    description: "version to build for"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: 🏃 Run build script
+      shell: bash
+      run: |
+        echo "🔧 Building for version ${{ inputs.version }}"
+        chmod +x src/script.sh
+        ./src/script.sh "${{ inputs.version }}"
